@@ -38,9 +38,13 @@ def macro():
 	ctx = XSCRIPTCONTEXT.getComponentContext()  # コンポーネントコンテクストの取得。
 	smgr = ctx.getServiceManager()  # サービスマネージャーの取得。
 	doc = XSCRIPTCONTEXT.getDocument()  # マクロを起動した時のドキュメントのモデルを取得。  
-	doc.getText().setString("") 
+	doc.getText().setString("")  # すでにあるドキュメントの内容を消去する。
 	global wprint
-	wprint = createWriterPrinter(doc)
+	wprint = createWriterPrinter(doc)  # Writerドキュメントに一行ずつ出力するグローバル関数を取得。
+	
+	
+	
+	
 	originalpath = "$(inst)/sdk/docs/idl/ref/"
 	wprint("Original path:")
 	wprint("\t{}".format(originalpath))
@@ -48,6 +52,10 @@ def macro():
 	fileurl = pathsubstservice.substituteVariables(originalpath, True)
 	wprint("substituteVariables:")
 	wprint("\t{}".format(fileurl))
+	
+	
+	
+	
 	systempath = convertWithOnlyPython(fileurl)
 	convertWithunohelpler(fileurl)
 	convertWithFileContentProvider(ctx, smgr, fileurl)
@@ -60,28 +68,41 @@ def macro():
 	convertWithFileContentProvider(ctx, smgr, fileurl)
 	
 
-	fileurl = "simple string"
-	wprint("\t{}".format(fileurl))
-	convertWithOnlyPython(fileurl)
-	convertWithunohelpler(fileurl)
-	convertWithFileContentProvider(ctx, smgr, fileurl)
+# 	fileurl = "simple string"
+# 	wprint("\t{}".format(fileurl))
+# 	convertWithOnlyPython(fileurl)
+# 	convertWithunohelpler(fileurl)
+# 	convertWithFileContentProvider(ctx, smgr, fileurl)
+# 	
+# 	fileurl = systempath
+# 	wprint("\t{}".format(fileurl))
+# 	try:
+# 		convertWithOnlyPython(fileurl)
+# 	except:
+# 		traceback.print_exc()
+# 	try:
+# 		convertWithunohelpler(fileurl)
+# 	except:
+# 		traceback.print_exc()
+# 	try:
+# 		convertWithFileContentProvider(ctx, smgr, fileurl)
+# 	except:
+# 		traceback.print_exc()
 	
-	fileurl = systempath
-	wprint("\t{}".format(fileurl))
-	try:
-		convertWithOnlyPython(fileurl)
-	except:
-		traceback.print_exc()
-	try:
-		convertWithunohelpler(fileurl)
-	except:
-		traceback.print_exc()
-	try:
-		convertWithFileContentProvider(ctx, smgr, fileurl)
-	except:
-		traceback.print_exc()
-	
-	
+# 	fileurl = originalpath
+# 	wprint("\t{}".format(fileurl))
+# 	try:
+# 		convertWithOnlyPython(fileurl)
+# 	except:
+# 		traceback.print_exc()
+# 	try:
+# 		convertWithunohelpler(fileurl)
+# 	except:
+# 		traceback.print_exc()
+# 	try:
+# 		convertWithFileContentProvider(ctx, smgr, fileurl)
+# 	except:
+# 		traceback.print_exc()	
 	
 	
 def convertWithFileContentProvider(ctx, smgr, fileurl):	
@@ -128,9 +149,8 @@ def normalizePath(fileurl, systempath):
 def createWriterPrinter(doc):  # 引数はWriterドキュメント
 	text = doc.getText()
 	def wprint(txt):  # Writerドキュメントに追記出力。	
-		old = text.getString()
-		new = "{}\n{}".format(old, txt) if old else "{}".format(txt)
-		text.setString(new)
+		rng = text.getEnd()  # 文末の領域を取得。
+		rng.setString("{}\n".format(txt))
 	return wprint
 g_exportedScripts = macro, #マクロセレクターに限定表示させる関数をタプルで指定。
 if __name__ == "__main__":  # オートメーションで実行するとき
