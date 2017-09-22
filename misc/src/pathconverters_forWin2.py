@@ -13,34 +13,34 @@ def macro():
 	filecontentprovider = smgr.createInstanceWithContext("com.sun.star.ucb.FileContentProvider", ctx)
 	convert = converters(filecontentprovider)
 	
-	args = "/home/pq", "Pass Linux SystemPath."
-	wprint(convert(args))
-	args = "C:\\Users\\pq", "Pass Windows SystemPath."
-	wprint(convert(args))
-	args = "file:///home/pq", "Pass Linux FielURL."
-	wprint(convert(args))
-	args = "file:///C:/Users/pq", "Pass Windows FielURL."
-	wprint(convert(args))	
-	args = "simple word", "Pass words without a colon"
-	wprint(convert(args))
-	args = "c:word", "Pass words with a colon"
-	wprint(convert(args))		
-	
-	args = "/home/日本語", "Pass Linux SystemPath."
-	wprint(convert(args))
-	args = "C:\\Users\\日本語", "Pass Windows SystemPath."
-	wprint(convert(args))
+# 	args = "/home/pq", "Pass Linux SystemPath."
+# 	wprint(convert(args))
+# 	args = "C:\\Users\\pq", "Pass Windows SystemPath."
+# 	wprint(convert(args))
+# 	args = "file:///home/pq", "Pass Linux FielURL."
+# 	wprint(convert(args))
+# 	args = "file:///C:/Users/pq", "Pass Windows FielURL."
+# 	wprint(convert(args))	
+# 	args = "simple word", "Pass words without a colon"
+# 	wprint(convert(args))
+# 	args = "c:word", "Pass words with a colon"
+# 	wprint(convert(args))		
+# 	
+# 	args = "/home/日本語", "Pass Linux SystemPath."
+# 	wprint(convert(args))
+# 	args = "C:\\Users\\日本語", "Pass Windows SystemPath."
+# 	wprint(convert(args))
 	args = "file:///home/日本語", "Pass Linux FielURL."
 	wprint(convert(args))  # Windowsではunohelper.systemPathToFileUrl(arg)でLibreOfficeがクラッシュする。
 	args = "file:///C:/Users/日本語", "Pass Windows FielURL."
 	wprint(convert(args))  # Windowsではunohelper.systemPathToFileUrl(arg)でLibreOfficeがクラッシュする。
-	args = "日本語", "Pass words without a colon"
-	wprint(convert(args))
+# 	args = "日本語", "Pass words without a colon"
+# 	wprint(convert(args))
 	args = "c:日本語", "Pass words with a colon"
 	wprint(convert(args))  # Windowsではunohelper.systemPathToFileUrl(arg)でLibreOfficeがクラッシュする。
 	
-	args = "file:///home/%E6%97%A5%E6%9C%AC%E8%AA%9E", "Pass Linux FielURL."
-	wprint(convert(args))
+# 	args = "file:///home/%E6%97%A5%E6%9C%AC%E8%AA%9E", "Pass Linux FielURL."
+# 	wprint(convert(args))
 	args = "file:///C:/Users/%E6%97%A5%E6%9C%AC%E8%AA%9E", "Pass Windows FielURL."
 	wprint(convert(args))  # Windowsではunohelper.systemPathToFileUrl(arg)でLibreOfficeがクラッシュする。
 def converters(filecontentprovider):
@@ -85,10 +85,10 @@ def converters(filecontentprovider):
 			results[3] = Path(arg).as_uri()
 		except Exception as e:
 			results[3] = "Exception: {}".format(e)
-		try:
-			results[4] = unohelper.systemPathToFileUrl(arg)
-		except Exception as e:
-			results[4] = "Exception: {}".format(e)
+# 		try:
+# 			results[4] = unohelper.systemPathToFileUrl(arg)  # WindowsではPass words without a colonとPass Linux FielURL以外では日本語を含むとLibreOfficeがクラッシュする。
+# 		except Exception as e:
+# 			results[4] = "Exception: {}".format(e)
 		try:
 			results[5] = filecontentprovider.getFileURLFromSystemPath("", arg)
 		except Exception as e:

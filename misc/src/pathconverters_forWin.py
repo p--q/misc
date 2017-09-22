@@ -31,18 +31,18 @@ def macro():
 	args = "C:\\Users\\日本語", "Pass Windows SystemPath."
 	wprint(convert(args))
 	args = "file:///home/日本語", "Pass Linux FielURL."
-	wprint(convert(args))  # Windowsではunohelper.systemPathToFileUrl(arg)でLibreOfficeがクラッシュする。
+# 	wprint(convert(args))  # Windowsではunohelper.systemPathToFileUrl(arg)でLibreOfficeがクラッシュする。
 	args = "file:///C:/Users/日本語", "Pass Windows FielURL."
-	wprint(convert(args))  # Windowsではunohelper.systemPathToFileUrl(arg)でLibreOfficeがクラッシュする。
+# 	wprint(convert(args))  # Windowsではunohelper.systemPathToFileUrl(arg)でLibreOfficeがクラッシュする。
 	args = "日本語", "Pass words without a colon"
 	wprint(convert(args))
 	args = "c:日本語", "Pass words with a colon"
-	wprint(convert(args))  # Windowsではunohelper.systemPathToFileUrl(arg)でLibreOfficeがクラッシュする。
+# 	wprint(convert(args))  # Windowsではunohelper.systemPathToFileUrl(arg)でLibreOfficeがクラッシュする。
 	
 	args = "file:///home/%E6%97%A5%E6%9C%AC%E8%AA%9E", "Pass Linux FielURL."
 	wprint(convert(args))
 	args = "file:///C:/Users/%E6%97%A5%E6%9C%AC%E8%AA%9E", "Pass Windows FielURL."
-	wprint(convert(args))  # Windowsではunohelper.systemPathToFileUrl(arg)でLibreOfficeがクラッシュする。
+# 	wprint(convert(args))  # Windowsではunohelper.systemPathToFileUrl(arg)でLibreOfficeがクラッシュする。
 def converters(filecontentprovider):
 	output = """arg = '{}'  # {}
 	FileURL to SystemPath
@@ -86,7 +86,7 @@ def converters(filecontentprovider):
 		except Exception as e:
 			results[3] = "Exception: {}".format(e)
 		try:
-			results[4] = unohelper.systemPathToFileUrl(arg)
+			results[4] = unohelper.systemPathToFileUrl(arg)  # WindowsではPass words without a colonとPass Linux FielURL以外では日本語を含むとLibreOfficeがクラッシュする。
 		except Exception as e:
 			results[4] = "Exception: {}".format(e)
 		try:

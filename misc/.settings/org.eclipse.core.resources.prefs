@@ -1,4 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/pathconverters.py=utf-8
+encoding//src/pathconverters_forWin.py=utf-8
+encoding//src/pathconverters_forWin2.py=utf-8
 encoding//src/replacefunc.py=utf-8
 encoding//src/tree.py=utf-8
